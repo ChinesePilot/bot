@@ -1,10 +1,13 @@
+import axios from 'axios';
+import{host } from '../config'
 import {
   INIT_SUCCESS, INIT_FAILED,
   FETCH_MESSAGES_START, FETCH_MESSAGES_FAILED, FETCH_MESSAGES_SUCCESS,
   SEND_PICTURE_START, SEND_PICTURE_SUCCESS, SEND_PICTURE_FAILED,
-  SEND_FORM_START, SEND_FORM_FAILED, SEND_FORM_SUCCESS
+  SEND_FORM_START, SEND_FORM_FAILED, SEND_FORM_SUCCESS,DESTROY_SESSION
 } from '../constant/chatbot-consts';
-import axios from 'axios';
+
+
 
 export function init() {
   return dispatch => {
@@ -46,30 +49,7 @@ export function fetchMessages() {
   };
 };
 
-export function sendPicture(e) {
-  return (dispatch, getState) => {
-    const session_id = getState().chatbot.session_id;
-    let file = e.target.files[0];
-    var reader = new FileReader();
-    reader.onload = (event) => {
-     let imgSrc = event.target.result;
-      dispatch({ type: SEND_PICTURE_START, payload: { from: 'user', imgSrc: imgSrc, scrollToBottom: true } })
-      axios.post('https://avia.splat.cleverbots.ru/splat/message/', {
-         'userId': '1', 'sessionId': session_id, 'messageType': 0, 'message': imgSrc
-      }).then(() => {
-        dispatch({type:SEND_PICTURE_SUCCESS})
-        setTimeout(() => {
-         dispatch(fetchMessages())
-        }, 1000)
-      }).catch(() => {
-          //console.log(error);
-          dispatch({ type: SEND_PICTURE_FAILED, payload: { from: 'bot', text: 'К сожалению возникла ошибка при отправки qr-кода на сервер, пожалуйста повторите попытку', scrollToBottom: true } });
-        }
-      )
-    }
-    reader.readAsDataURL(file);
-  };
-};
+
 
 export function sendForm(messageText) {
   return (dispatch, getState) => {
@@ -83,5 +63,10 @@ export function sendForm(messageText) {
         dispatch(fetchMessages())
       }, 500)
     }).catch(()=>dispatch({type:SEND_FORM_FAILED, payload:{ from: 'bot', text:'К сожалению возникла ошибка при отправки вашего сообщения на сервер, пожалуйста повторите попытку', scrollToBottom: true }}))
+  };
+};
+export function destroySession () {
+  return (dispatch, getState) => {
+   dispatch({type:DESTROY_SESSION})
   };
 };

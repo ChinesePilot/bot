@@ -2,7 +2,7 @@ import {
   INIT_SUCCESS, INIT_FAILED,
   FETCH_MESSAGES_START, FETCH_MESSAGES_FAILED, FETCH_MESSAGES_SUCCESS,
   SEND_PICTURE_START, SEND_PICTURE_SUCCESS, SEND_PICTURE_FAILED,
-  SEND_FORM_START, SEND_FORM_FAILED, SEND_FORM_SUCCESS
+  SEND_FORM_START, SEND_FORM_FAILED, SEND_FORM_SUCCESS,DESTROY_SESSION,CREATE_NEW_SESSION,CHANGE_ON_OPERATOR
 } from '../constant/chatbot-consts';
 
 const initialState = {
@@ -29,12 +29,13 @@ export default function chatBotReducer(state = initialState, action) {
       return { ...state, messages: [...state.messages,action.payload] }
       case SEND_FORM_FAILED:
       return { ...state, messages: [...state.messages,action.payload] }
-      case SEND_PICTURE_START:
-      return { ...state, messages: [...state.messages,action.payload] };
-      case SEND_PICTURE_SUCCESS:
-      return state;
-      case SEND_PICTURE_FAILED:
-      return { ...state, messages: [...state.messages,action.payload]};
+      case DESTROY_SESSION:
+      return state; 
+      case CREATE_NEW_SESSION:
+      return state; 
+      case CHANGE_ON_OPERATOR:
+      return state; 
+      
   }
   return state;
 }

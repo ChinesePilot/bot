@@ -42,10 +42,8 @@ class Chatbot extends React.Component {
             messageText: event.target.value
         })
     }
-   
     render() {
         // const addMessages = this.props.messages.map((item, index) => {
-
         //     let text = '', img = '';
         //     if (item.text) {
         //         text = <p>{renderHTML(item.text)}</p> 
