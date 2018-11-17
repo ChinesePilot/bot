@@ -14,10 +14,4 @@ const App = () => (
   </Provider>
 );
 
-// const mapStateToProps = state => ({
-//   // authenticated: state.login.authenticated || localStorage.getItem('hash')
-//   authenticated: true
-// });
-
-
 export default App;
