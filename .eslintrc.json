@@ -1,0 +1,12 @@
+{
+    "extends":["react-app", "eslint-config-react-app" ],
+    "env": {
+        "webextensions": true
+    },
+    "rules": {
+        "quotes": [
+            2,
+            "single"
+        ]
+    }
+}
