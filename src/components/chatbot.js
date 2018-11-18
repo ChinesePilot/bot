@@ -4,6 +4,7 @@ import renderHTML from 'react-render-html';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import logo  from '../images/logo.png';
+import {addMessage} from '../actions/chatbot'
 
 
 class Chatbot extends React.Component {
@@ -43,30 +44,30 @@ class Chatbot extends React.Component {
         })
     }
     render() {
-        // const addMessages = this.props.messages.map((item, index) => {
-        //     let text = '', img = '';
-        //     if (item.text) {
-        //         text = <p>{renderHTML(item.text)}</p> 
-        //     }
-        //     if (item.imgSrc) {
-        //         img = <img src={`${item.imgSrc}`} />
-        //     }     
-        //     if(item.scrollToBottom) {
-        //         setTimeout(()=> {
-        //            this.scrollToBottom()
-        //         }, 50)
-        //     }
-        //     return (
-        //         <Fragment key={index}>
-        //             <div className={`chatbot__chat__message ${item.from === 'bot' ? 'chatbot__chat__message--bot' : 'chatbot__chat__message--user'}`}>
-        //                 <div className='inner-container'>
-        //                     {text}
-        //                     {img}
-        //                 </div>
-        //             </div>
-        //         </Fragment>
-        //     )
-        // })
+        const addMessages = this.props.messages.map((item, index) => {
+            let text = '', img = '';
+            if (item.text) {
+                text = <p>{renderHTML(item.text)}</p> 
+            }
+            if (item.imgSrc) {
+                img = <img src={`${item.imgSrc}`} />
+            }     
+            if(item.scrollToBottom) {
+                setTimeout(()=> {
+                   this.scrollToBottom()
+                }, 50)
+            }
+            return (
+                <Fragment key={index}>
+                    <div className={`chatbot__chat__message ${item.from === 'bot' ? 'chatbot__chat__message--bot' : 'chatbot__chat__message--user'}`}>
+                        <div className='inner-container'>
+                            {text}
+                            {img}
+                        </div>
+                    </div>
+                </Fragment>
+            )
+        })
         return (
            
             <div className="chatbot-wrapper">
@@ -86,7 +87,9 @@ class Chatbot extends React.Component {
                 </div>
                 <div ref="messageList" className="chatbot__chat-wrapper  js-chatbot__chat-wrapper">
                     <div className="chatbot__chat cf">
-                        {/* {addMessages} */}
+                    <button  onClick={this.addmessage} className={'message-button'}>Переход на основной сайт</button>
+                    <button onClick={()=>this.props.addMessage('Текущий статус заявки')} className={'message-button'}>Статус заявки</button>
+                        {addMessages}
                     </div>
                 </div>
                 <div className="chatbot__controls">
@@ -114,9 +117,9 @@ class Chatbot extends React.Component {
         );
     }
 }
-const mapDispatchtoProps = dispatch => bindActionCreators({  }, dispatch);
+const mapDispatchtoProps = dispatch => bindActionCreators({ addMessage }, dispatch);
 const mapStateToProps = state => ({
-  
+    messages: state.chatbot.messages
 });
 
 export default connect(
